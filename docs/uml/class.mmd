@@ -1,0 +1,54 @@
+classDiagram
+    class User {
+        -int userId
+        -String username
+        -String passwordHash
+        +login(username, password) boolean
+        +logout() void
+        +addColor(name) void
+        +searchColors(query) List~Color~
+    }
+
+    class Administrator {
+        +createUser(username, password) User
+    }
+
+    class Color {
+        -int colorId
+        -String name
+        -int createdBy
+        +getName() String
+    }
+
+    class AuthService {
+        +authenticate(username, password) User
+        +validateCredentials(username, password) boolean
+    }
+
+    class UserService {
+        +createUser(username, password) User
+        +getUser(userId) User
+    }
+
+    class ColorService {
+        +addColor(name, userId) Color
+        +searchColors(query) List~Color~
+        +getAllColors() List~Color~
+    }
+
+    class Database {
+        +saveUser(user) boolean
+        +getUser(username) User
+        +saveColor(color) boolean
+        +searchColors(query) List~Color~
+    }
+
+    Administrator --|> User
+
+    User "1" --> "0..*" Color : creates
+    AuthService --> Database : accesses
+    UserService --> Database : manages accounts
+    ColorService --> Database : manages colors
+    User --> AuthService : authenticates through
+    Administrator --> UserService : manages users
+    User --> ColorService : manages colors
