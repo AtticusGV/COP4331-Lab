@@ -1,0 +1,38 @@
+flowchart TD
+    A([Start]) --> B[Open COLORS Website]
+    B --> C[Enter Username and Password]
+    C --> D{Are Credentials Valid?}
+
+    D -->|No| E[Display Login Error]
+    E --> C
+
+    D -->|Yes| F{Is User Administrator?}
+
+    F -->|Yes| G[Access Administrator Functions]
+    G --> H[Create New User Account]
+    H --> I[Save Account to Database]
+    I --> J[Display Confirmation]
+    J --> K([End])
+
+    F -->|No| L[Access COLORS Application]
+    L --> M{Choose an Operation}
+
+    M -->|Add Color| N[Enter Color Name]
+    N --> O[Submit Color]
+    O --> P{Is Input Valid?}
+    P -->|No| Q[Display Error Message]
+    Q --> N
+    P -->|Yes| R[Save Color to Database]
+    R --> S[Display Success Message]
+    S --> M
+
+    M -->|Search Colors| T[Enter Search Term]
+    T --> U[Query Database]
+    U --> V{Matching Colors Found?}
+    V -->|Yes| W[Display Matching Colors]
+    V -->|No| X[Display No Results Message]
+    W --> M
+    X --> M
+
+    M -->|Logout| Y[End User Session]
+    Y --> K
