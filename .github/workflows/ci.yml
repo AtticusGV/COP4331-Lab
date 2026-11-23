@@ -1,24 +1,22 @@
 
-name: Web Application CI
+name: COLORS CI
 
 on:
   push:
-    branches:
-      - assign4
+    branches: [assignment4, assignment5]
+
   pull_request:
-    branches:
-      - assign4
+    branches: [assignment4, assignment5]
 
 jobs:
-  lint:
-    name: HTML, CSS, and JavaScript Linting
+  build:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -27,11 +25,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint HTML
+      - name: Run HTML linting
         run: npm run lint:html
 
-      - name: Lint CSS
+      - name: Run CSS linting
         run: npm run lint:css
 
-      - name: Lint JavaScript
+      - name: Run JavaScript linting
         run: npm run lint:js
+
+      - name: Run automated tests
+        run: npm test -- --runInBand
